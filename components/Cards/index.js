@@ -38,10 +38,29 @@ let makeCard = obj => {
   return cardDiv;
 };
 
-axios.get("https://lambda-times-backend.herokuapp.com/articles").then(res => {
-  console.log(
+axios
+  .get("https://lambda-times-backend.herokuapp.com/articles")
+  .then(res => {
     Object.values(res.data.articles).map(a => {
       return cardEntry.append(makeCard(a[0]));
-    })
+    });
+    console.log(Object.values(res.data.articles));
+  })
+  .then(
+    axios
+      .get("https://lambda-times-backend.herokuapp.com/articles")
+      .then(res => {
+        Object.values(res.data.articles).map(a => {
+          return cardEntry.append(makeCard(a[1]));
+        });
+      })
+  )
+  .then(
+    axios
+      .get("https://lambda-times-backend.herokuapp.com/articles")
+      .then(res => {
+        Object.values(res.data.articles).map(a => {
+          return cardEntry.append(makeCard(a[2]));
+        });
+      })
   );
-});
